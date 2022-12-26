@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <title>Team Generator</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <h1>Random Team Generator</h1>
+      <form id="form">
+        <div>
+          <label for="textarea">Participants names</label>
+          <textarea name="participants" id="textarea"></textarea>
+        </div>
+        <div>
+          <label for="totalParticipants">Total participants</label>
+          <input
+            type="text"
+            name="totalParticipants"
+            id="totalParticipants"
+            readonly
+          />
+        </div>
+        <div>
+          <label for="numberTeams">Generate by number of teams</label>
+          <input
+            type="radio"
+            name="selectBy"
+            id="numberTeams"
+            value="byTeams"
+          />
+        </div>
+        <div>
+          <label for="numberParticipants"
+            >Generate by number of participants</label
+          >
+          <input
+            type="radio"
+            name="selectBy"
+            id="numberParticipants"
+            value="byParticipants"
+          />
+        </div>
+        <div>
+          <label for="select">Select</label>
+          <select name="select" id="select"></select>
+        </div>
+        <button type="reset">Clear</button>
+        <button type="submit">Generate</button>
+      </form>
+    </main>
+    <footer></footer>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
