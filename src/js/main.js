@@ -1,7 +1,7 @@
 'use strict';
 const d = document,
   $form = d.getElementById('form'),
-  $selectBy = $form.selectBy,
+  $generateBy = $form.generateBy,
   $select = d.getElementById('select');
 
 let strParticipants = null,
@@ -15,8 +15,8 @@ d.addEventListener('DOMContentLoaded', () => {
 function eventListeners() {
   $form.participants.addEventListener('input', handleInput);
   $form.participants.addEventListener('keyup', handleKeyup);
-  for (const $selector of $selectBy) {
-    $selector.addEventListener('change', handleChange);
+  for (const $generate of $generateBy) {
+    $generate.addEventListener('change', handleChange);
   }
   $form.addEventListener('submit', handleSubmit);
 }
@@ -33,12 +33,34 @@ function handleKeyup(e) {
 }
 
 function handleChange(e) {
-  console.log(e.target.value);
   if (arrParticipants.length > 2) {
-    console.log(arrParticipants.length);
+    handleSelect(e.target.value);
   }
+}
+
+function handleSelect(option) {
+  let limit = null,
+    html = '<option value="">Please choose an option...</option>';
+  if (option === 'byTeams') {
+    limit = arrParticipants.length / 2;
+    for (let i = 2; i <= limit; i++) {
+      html += `
+      <option value="${i}">${i} teams</option>
+    `;
+    }
+  }
+  if (option === 'byParticipants') {
+    limit = arrParticipants.length - 2;
+    for (let i = 2; i <= limit; i++) {
+      html += `
+      <option value="${i}">${i} participants by team</option>
+    `;
+    }
+  }
+  $select.innerHTML = html;
 }
 
 function handleSubmit(e) {
   e.preventDefault();
+  $select.value;
 }
