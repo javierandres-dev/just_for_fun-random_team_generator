@@ -9,11 +9,11 @@
   <body>
     <header></header>
     <main>
-      <h1>Random Team Generator</h1>
+      <h1 class="title">Random Team Generator</h1>
       <form id="form">
         <div>
           <label for="textarea">Participants names</label>
-          <textarea name="participants" id="textarea"></textarea>
+          <textarea name="participants" id="textarea" class="w-full"></textarea>
         </div>
         <div>
           <label for="totalParticipants">Total participants</label>
@@ -22,6 +22,7 @@
             name="totalParticipants"
             id="totalParticipants"
             readonly
+            class="b-none"
           />
         </div>
         <div>
@@ -48,9 +49,10 @@
           <label for="select">Select</label>
           <select name="select" id="select"></select>
         </div>
-        <button type="reset">Clear</button>
-        <button type="submit">Generate</button>
+        <button type="reset" class="btn btn-primary">Clear</button>
+        <button type="submit" class="btn btn-secondary">Generate</button>
       </form>
+      <section id="teams" class="teams"></section>
     </main>
     <footer></footer>
     <script src="./js/main.js"></script>

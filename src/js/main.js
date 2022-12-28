@@ -2,7 +2,8 @@
 const d = document,
   $form = d.getElementById('form'),
   $generateBy = $form.generateBy,
-  $select = d.getElementById('select');
+  $select = d.getElementById('select'),
+  $teams = d.getElementById('teams');
 
 let strParticipants = null,
   arrParticipants = [],
@@ -20,6 +21,13 @@ function eventListeners() {
     $generate.addEventListener('change', handleChange);
   }
   $form.addEventListener('submit', handleSubmit);
+  $form.addEventListener('reset', () => {
+    strParticipants = null;
+    arrParticipants = [];
+    $selected = null;
+    $form.totalParticipants.value = arrParticipants.length;
+    $teams.innerHTML = null;
+  });
 }
 
 function handleInput(e) {
@@ -40,9 +48,10 @@ function handleChange(e) {
 }
 
 function handleSelect(option) {
-  const limit = arrParticipants.length / 2;
-  let html = '<option value="">Please choose an option...</option>';
+  let limit = null,
+    html = '<option value="">Please choose an option...</option>';
   if (option === 'byTeams') {
+    limit = arrParticipants.length / 2;
     for (let i = 2; i <= limit; i++) {
       html += `
       <option value="${i}-teams">${i} teams</option>
@@ -50,6 +59,7 @@ function handleSelect(option) {
     }
   }
   if (option === 'byParticipants') {
+    limit = arrParticipants.length - 2;
     for (let i = 2; i <= limit; i++) {
       html += `
       <option value="${i}-participants">${i} participants by team</option>
@@ -66,20 +76,53 @@ function handleSubmit(e) {
 }
 
 function generateTeams(amount, rule) {
-  console.log(arrParticipants);
-  const indexs = [];
+  const indexs = [],
+    participants = [],
+    teams = [];
+  let maxParticipants = null,
+    arr = [];
   do {
     const index = getRandomInt(arrParticipants.length);
-    console.log(index);
-  } while (indexs.length === arrParticipants.length);
-  console.log(indexs);
-  //const newArr = arrParticipants
-  if (rule === 'teams') {
+    if (!indexs.includes(index)) indexs.push(index);
+  } while (indexs.length !== arrParticipants.length);
+  for (const i of indexs) participants.push(arrParticipants[indexs[i]]);
+  if (rule === 'teams')
+    maxParticipants = Math.round(participants.length / amount);
+  if (rule === 'participants') maxParticipants = amount;
+  for (let i = 0; i < participants.length; i++) {
+    arr.push(participants[i]);
+    if (arr.length === maxParticipants) {
+      teams.push(arr);
+      arr = [];
+    }
+    if (i + 1 === participants.length) {
+      if (arr.length === 1) {
+        const idx = getRandomInt(teams.length);
+        teams[idx].push(arr[0]);
+      }
+      if (arr.length > 1) teams.push(arr);
+    }
   }
-  if (rule === 'participants') {
-  }
+  showTeams(teams);
 }
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+function showTeams(teams) {
+  let i = 0,
+    html = '';
+  while (i < teams.length) {
+    html += `
+      <p>Team ${i + 1}</p>
+      <ul>
+    `;
+    for (const participant of teams[i]) {
+      html += `<li>${participant}</li>`;
+    }
+    html += '</ul>';
+    i++;
+  }
+  $teams.innerHTML = html;
 }

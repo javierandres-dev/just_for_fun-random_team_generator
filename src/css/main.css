@@ -1,0 +1,44 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+  font-size: 62.5%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 1rem;
+}
+form {
+  font-size: 1.8rem;
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  font-size: 2.4rem;
+  text-align: center;
+}
+.w-full {
+  width: 100%;
+}
+.b-none {
+  border: none;
+}
+.teams {
+  font-size: 2rem;
+}
+.btn {
+  padding: 1rem 2rem;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+}
+.btn-primary {
+  background-color: #0582ca;
+}
+.btn-secondary {
+  background-color: #f29559;
+}
