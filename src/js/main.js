@@ -5,7 +5,8 @@ const d = document,
   $select = d.getElementById('select');
 
 let strParticipants = null,
-  arrParticipants = [];
+  arrParticipants = [],
+  $selected = null;
 
 d.addEventListener('DOMContentLoaded', () => {
   $form.totalParticipants.value = arrParticipants.length;
@@ -39,21 +40,19 @@ function handleChange(e) {
 }
 
 function handleSelect(option) {
-  let limit = null,
-    html = '<option value="">Please choose an option...</option>';
+  const limit = arrParticipants.length / 2;
+  let html = '<option value="">Please choose an option...</option>';
   if (option === 'byTeams') {
-    limit = arrParticipants.length / 2;
     for (let i = 2; i <= limit; i++) {
       html += `
-      <option value="${i}">${i} teams</option>
+      <option value="${i}-teams">${i} teams</option>
     `;
     }
   }
   if (option === 'byParticipants') {
-    limit = arrParticipants.length - 2;
     for (let i = 2; i <= limit; i++) {
       html += `
-      <option value="${i}">${i} participants by team</option>
+      <option value="${i}-participants">${i} participants by team</option>
     `;
     }
   }
@@ -62,5 +61,25 @@ function handleSelect(option) {
 
 function handleSubmit(e) {
   e.preventDefault();
-  $select.value;
+  const arr = $select.value.split('-');
+  generateTeams(parseInt(arr[0]), arr[1]);
+}
+
+function generateTeams(amount, rule) {
+  console.log(arrParticipants);
+  const indexs = [];
+  do {
+    const index = getRandomInt(arrParticipants.length);
+    console.log(index);
+  } while (indexs.length === arrParticipants.length);
+  console.log(indexs);
+  //const newArr = arrParticipants
+  if (rule === 'teams') {
+  }
+  if (rule === 'participants') {
+  }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
