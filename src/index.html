@@ -8,24 +8,32 @@
   </head>
   <body>
     <header></header>
-    <main>
+    <main class="container">
       <h1 class="title">Random Team Generator</h1>
+      <p class="lead">Instructions</p>
+      <ol id="instructions" class="instructions">
+        <li>Enter participants names, one participant per line.</li>
+        <li>
+          Choose between generate by number of teams or by number of
+          participants.
+        </li>
+        <li>Select one option according to your choise.</li>
+      </ol>
       <form id="form">
-        <div>
+        <div class="group">
           <label for="textarea">Participants names</label>
-          <textarea name="participants" id="textarea" class="w-full"></textarea>
+          <textarea name="participants" id="textarea"></textarea>
         </div>
-        <div>
-          <label for="totalParticipants">Total participants</label>
+        <div class="group">
+          <label for="totalParticipants">Total participants:</label>
           <input
             type="text"
             name="totalParticipants"
             id="totalParticipants"
             readonly
-            class="b-none"
           />
         </div>
-        <div>
+        <div class="group">
           <label for="numberTeams">Generate by number of teams</label>
           <input
             type="radio"
@@ -34,7 +42,7 @@
             value="byTeams"
           />
         </div>
-        <div>
+        <div class="group">
           <label for="numberParticipants"
             >Generate by number of participants</label
           >
@@ -45,7 +53,7 @@
             value="byParticipants"
           />
         </div>
-        <div>
+        <div class="group">
           <label for="select">Select</label>
           <select name="select" id="select"></select>
         </div>

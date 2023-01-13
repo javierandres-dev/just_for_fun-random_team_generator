@@ -72,7 +72,8 @@ function handleSelect(option) {
 function handleSubmit(e) {
   e.preventDefault();
   const arr = $select.value.split('-');
-  generateTeams(parseInt(arr[0]), arr[1]);
+  if (isNaN(parseInt(arr[0]))) highlightInstructions();
+  else generateTeams(parseInt(arr[0]), arr[1]);
 }
 
 function generateTeams(amount, rule) {
@@ -125,4 +126,9 @@ function showTeams(teams) {
     i++;
   }
   $teams.innerHTML = html;
+}
+
+function highlightInstructions() {
+  const $el = d.getElementById('instructions');
+  $el.classList.add('text-danger');
 }
