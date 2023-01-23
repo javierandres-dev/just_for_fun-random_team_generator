@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Faster+One&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css" />
     <title>Team Generator</title>
   </head>
   <body>
-    <header></header>
+    <header><h1 class="title">Random Team Generator</h1></header>
     <main class="container">
-      <h1 class="title">Random Team Generator</h1>
       <p class="lead">Instructions</p>
       <ol id="instructions" class="instructions">
         <li>Enter participants names, one participant per line.</li>
@@ -19,12 +21,12 @@
         </li>
         <li>Select one option according to your choise.</li>
       </ol>
-      <form id="form">
-        <div class="group">
+      <form id="form" class="form">
+        <div class="form-group">
           <label for="textarea">Participants names</label>
           <textarea name="participants" id="textarea"></textarea>
         </div>
-        <div class="group">
+        <div class="form-group">
           <label for="totalParticipants">Total participants:</label>
           <input
             type="text"
@@ -33,8 +35,9 @@
             readonly
           />
         </div>
-        <div class="group">
-          <label for="numberTeams">Generate by number of teams</label>
+        <label>Generate by</label>
+        <div class="form-group">
+          <label for="numberTeams">number of teams</label>
           <input
             type="radio"
             name="generateBy"
@@ -42,9 +45,10 @@
             value="byTeams"
           />
         </div>
-        <div class="group">
+        <label>Generate by</label>
+        <div class="form-group">
           <label for="numberParticipants"
-            >Generate by number of participants</label
+            >number of participants</label
           >
           <input
             type="radio"
@@ -53,16 +57,23 @@
             value="byParticipants"
           />
         </div>
-        <div class="group">
+        <div class="form-group v-hidden">
           <label for="select">Select</label>
           <select name="select" id="select"></select>
         </div>
-        <button type="reset" class="btn btn-primary">Clear</button>
-        <button type="submit" class="btn btn-secondary">Generate</button>
+        <button type="submit" class="btn btn-primary">Generate</button>
+        <button type="reset" class="btn btn-secondary">Clear</button>
       </form>
       <section id="teams" class="teams"></section>
     </main>
-    <footer></footer>
+    <aside class="dev">
+      <p>
+        Found a bug or have an idea? 
+        <a href="https://javierandres.dev" target="_blank" rel="noopener noreferrer">
+          Contact me
+        </a>.&nbsp;&nbsp;&copy;&nbsp;2023
+      </p>
+    </aside>
     <script src="./js/main.js"></script>
   </body>
 </html>

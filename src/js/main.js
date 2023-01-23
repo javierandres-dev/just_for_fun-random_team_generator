@@ -22,6 +22,7 @@ function eventListeners() {
   }
   $form.addEventListener('submit', handleSubmit);
   $form.addEventListener('reset', () => {
+    $select.parentElement.classList.add('v-hidden')
     strParticipants = null;
     arrParticipants = [];
     $selected = null;
@@ -48,6 +49,7 @@ function handleChange(e) {
 }
 
 function handleSelect(option) {
+  $select.parentElement.classList.remove('v-hidden')
   let limit = null,
     html = '<option value="">Please choose an option...</option>';
   if (option === 'byTeams') {
