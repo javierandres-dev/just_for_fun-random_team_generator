@@ -17,12 +17,12 @@ d.addEventListener('DOMContentLoaded', () => {
 function eventListeners() {
   $form.participants.addEventListener('input', handleInput);
   $form.participants.addEventListener('keyup', handleKeyup);
-  for (const $generate of $generateBy) {
+  $form.participants.addEventListener('blur', handleBlur);
+  for (const $generate of $generateBy)
     $generate.addEventListener('change', handleChange);
-  }
   $form.addEventListener('submit', handleSubmit);
   $form.addEventListener('reset', () => {
-    $select.parentElement.classList.add('v-hidden')
+    $select.parentElement.classList.add('v-hidden');
     strParticipants = null;
     arrParticipants = [];
     $selected = null;
@@ -31,25 +31,30 @@ function eventListeners() {
   });
 }
 
+function setArrParticipants() {
+  arrParticipants = strParticipants.split('\n');
+  $form.totalParticipants.value = arrParticipants.length;
+}
+
 function handleInput(e) {
   strParticipants = e.target.value.trim();
 }
 
 function handleKeyup(e) {
-  if (e.key === 'Enter' || e.keyCode === 13) {
-    arrParticipants = strParticipants.split('\n');
-    $form.totalParticipants.value = arrParticipants.length;
-  }
+  if (e.key === 'Enter' || e.keyCode === 13) setArrParticipants();
+}
+
+function handleBlur() {
+  setArrParticipants();
 }
 
 function handleChange(e) {
-  if (arrParticipants.length > 2) {
-    handleSelect(e.target.value);
-  }
+  if (arrParticipants.length > 2) handleSelect(e.target.value);
+  else highlightInstructions();
 }
 
 function handleSelect(option) {
-  $select.parentElement.classList.remove('v-hidden')
+  $select.parentElement.classList.remove('v-hidden');
   let limit = null,
     html = '<option value="">Please choose an option...</option>';
   if (option === 'byTeams') {

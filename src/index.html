@@ -3,9 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Faster+One&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Faster+One&family=Fragment+Mono:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/main.css" />
     <title>Team Generator</title>
   </head>
@@ -14,13 +17,17 @@
     <main class="container">
       <p class="lead">Instructions</p>
       <ol id="instructions" class="instructions">
-        <li>Enter participants names, one participant per line.</li>
+        <li>
+          Enter participants names, one participant per line, more than two
+          participants.
+        </li>
         <li>
           Choose between generate by number of teams or by number of
           participants.
         </li>
         <li>Select one option according to your choise.</li>
       </ol>
+      <hr class="line" />
       <form id="form" class="form">
         <div class="form-group">
           <label for="textarea">Participants names</label>
@@ -35,27 +42,26 @@
             readonly
           />
         </div>
-        <label>Generate by</label>
-        <div class="form-group">
-          <label for="numberTeams">number of teams</label>
-          <input
-            type="radio"
-            name="generateBy"
-            id="numberTeams"
-            value="byTeams"
-          />
-        </div>
-        <label>Generate by</label>
-        <div class="form-group">
-          <label for="numberParticipants"
-            >number of participants</label
-          >
-          <input
-            type="radio"
-            name="generateBy"
-            id="numberParticipants"
-            value="byParticipants"
-          />
+        <label class="text-center">Generate by number of</label>
+        <div class="form-group-variant">
+          <div>
+            <input
+              type="radio"
+              name="generateBy"
+              id="numberTeams"
+              value="byTeams"
+            />
+            <label for="numberTeams">teams</label> o
+          </div>
+          <div>
+            r <label for="numberParticipants">participants</label>
+            <input
+              type="radio"
+              name="generateBy"
+              id="numberParticipants"
+              value="byParticipants"
+            />
+          </div>
         </div>
         <div class="form-group v-hidden">
           <label for="select">Select</label>
@@ -68,10 +74,14 @@
     </main>
     <aside class="dev">
       <p>
-        Found a bug or have an idea? 
-        <a href="https://javierandres.dev" target="_blank" rel="noopener noreferrer">
-          Contact me
-        </a>.&nbsp;&nbsp;&copy;&nbsp;2023
+        Found a bug or have an idea?
+        <a
+          href="https://javierandres.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact me </a
+        >.&nbsp;&nbsp;&copy;&nbsp;2023
       </p>
     </aside>
     <script src="./js/main.js"></script>
