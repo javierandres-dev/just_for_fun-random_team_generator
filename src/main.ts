@@ -1,12 +1,11 @@
-'use strict';
 const d = document,
-  $form = d.getElementById('form'),
+  $form = d.getElementById('form') as HTMLFormElement,
   $generateBy = $form.generateBy,
   $select = d.getElementById('select'),
   $teams = d.getElementById('teams');
 
-let strParticipants = null,
-  arrParticipants = [],
+let strParticipants: null | string = null,
+  arrParticipants: string[] = [],
   $selected = null;
 
 d.addEventListener('DOMContentLoaded', () => {
@@ -22,7 +21,7 @@ function eventListeners() {
     $generate.addEventListener('change', handleChange);
   $form.addEventListener('submit', handleSubmit);
   $form.addEventListener('reset', () => {
-    $select.parentElement.classList.add('v-hidden');
+    $select?.parentElement?.classList.add('v-hidden');
     strParticipants = null;
     arrParticipants = [];
     $selected = null;
