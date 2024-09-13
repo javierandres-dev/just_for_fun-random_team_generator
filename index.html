@@ -15,34 +15,69 @@
       <section>
         <h2>Participants</h2>
         <form>
-          <label for="name">Name of participant</label>
-          <input type="text" id="name" />
-          <button>+</button>
+          <div>
+            <input
+              type="radio"
+              id="byNames"
+              name="participants"
+              value="names"
+            />
+            <label for="byNames">By names</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="byCodes"
+              name="participants"
+              value="codes"
+            />
+            <label for="byCodes">By consecutive codes</label>
+          </div>
+          <div id="names" class="d-none">
+            <label for="name">Name of participant</label>
+            <input type="text" id="name" />
+            <button type="button" id="addName">+</button>
+          </div>
+          <div id="codes" class="d-none">
+            <div>
+              <label for="iCode">Initial code</label>
+              <input type="number" id="iCode" />
+            </div>
+            <div>
+              <label for="nCodes">Number of codes</label>
+              <input type="number" id="nCodes" />
+            </div>
+            <button type="button" id="addCodes">Add</button>
+          </div>
         </form>
-        <ol></ol>
+        <ol id="participants"></ol>
       </section>
       <section>
         <h2>Settings</h2>
         <form>
-          <label for="nGroups">Number of groups</label>
-          <input type="radio" id="nGroups" name="number" value="Groups" />
-          <label for="nParticipants"
-            >Maximum number of participants per group</label
-          >
-          <input
-            type="radio"
-            id="nParticipants"
-            name="number"
-            value="Participants"
-          />
-          <label for="number"></label>
-          <input type="number" id="number" disabled />
-          <button>Generate Teams</button>
+          <div>
+            <label for="nGroups">Number of groups</label>
+            <input type="radio" id="nGroups" name="number" value="Groups" />
+          </div>
+          <div>
+            <label for="nParticipants">Number of participants per group</label>
+            <input
+              type="radio"
+              id="nParticipants"
+              name="number"
+              value="Participants"
+            />
+          </div>
+          <div id="num" class="d-none">
+            <label for="number">Number</label>
+            <input type="number" id="number" />
+            <button type="button" id="generate">Generate Teams</button>
+          </div>
         </form>
       </section>
       <section>
         <h2>Generated Teams</h2>
-        <div></div>
+        <div id="groups"></div>
       </section>
     </main>
     <footer>...footer...</footer>
