@@ -3,7 +3,7 @@ Random Team Generator build with vanilla HTML, CSS and JavaScript.
 How does it look? Take a look at [Random Team Generator](https://javierandres-dev.github.io/just_for_fun-random_team_generator/)
 
 JUST FOR FUN projects ― I have done them to practice and review what I have learned.  
-Practice doesn't make perfect, practice makes better.
+´´Practice doesn't make perfect, practice makes better.´´
 ## Stack
 - HTML
 - CSS
