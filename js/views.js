@@ -4,10 +4,10 @@ export function getFirstStepView() {
   <h2><span>1.</span> Participants</h2>
   <p>How would you like to name the participants?</p>
   <ul>
-    <li>By name: You must enter one name at time</li>
+    <li>By name: You must enter one name at a time.</li>
     <li>
       By consecutive codes: You must enter the first number and the total
-      number of codes
+      number of codes.
     </li>
   </ul>
   <form>

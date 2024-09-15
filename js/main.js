@@ -12,7 +12,8 @@ d.addEventListener('DOMContentLoaded', () => {
 });
 
 function watchFirstStep() {
-  const $byNames = d.getElementById('byNames'),
+  const $form = d.querySelector('form'),
+    $byNames = d.getElementById('byNames'),
     $byCodes = d.getElementById('byCodes'),
     $name = d.getElementById('name'),
     $addName = d.getElementById('addName'),
@@ -25,6 +26,9 @@ function watchFirstStep() {
     iCode = null,
     nCodes = null;
 
+  $form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
   $byNames.addEventListener('click', () => {
     handleParticipants('names', 'codes');
   });
@@ -34,15 +38,13 @@ function watchFirstStep() {
   $name.addEventListener('input', (e) => {
     nameEntered = e.target.value;
   });
-  $addName.addEventListener('click', () => {
-    if (nameEntered) {
-      participants.push(nameEntered);
-      nameEntered = null;
-      $name.value = null;
-      showParticipants();
-    } else {
-      notify('warning', 'Enter a name');
+  $name.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      setParticipants();
     }
+  });
+  $addName.addEventListener('click', () => {
+    setParticipants();
   });
   $addNames.addEventListener('click', () => {
     if (!participants.length) {
@@ -55,21 +57,50 @@ function watchFirstStep() {
   });
   $iCode.addEventListener('input', (e) => {
     iCode = +e.target.value;
-    if (iCode <= 0) {
-      iCode = null;
-      $iCode.value = null;
-      notify('warning', 'You must enter a positive number');
+    checkCode('iCode');
+  });
+  $iCode.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      setCodes();
     }
   });
   $nCodes.addEventListener('input', (e) => {
     nCodes = +e.target.value;
-    if (nCodes <= 0) {
-      nCodes = null;
-      $nCodes.value = null;
-      notify('warning', 'You must enter a positive number');
+    checkCode('nCodes');
+  });
+  $nCodes.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      setCodes();
     }
   });
   $addCodes.addEventListener('click', () => {
+    setCodes();
+  });
+  const setParticipants = () => {
+    if (nameEntered) {
+      participants.push(nameEntered);
+      nameEntered = null;
+      $name.value = null;
+      showParticipants();
+    } else {
+      notify('warning', 'Enter a name');
+    }
+  };
+  const checkCode = (code) => {
+    if (code <= 0) {
+      notify('warning', 'You must enter a positive number');
+      if (code === 'iCode') {
+        iCode = null;
+        $iCode.value = null;
+      } else if (code === 'nCodes') {
+        {
+          nCodes = null;
+          $nCodes.value = null;
+        }
+      }
+    }
+  };
+  const setCodes = () => {
     if (!iCode) {
       notify('warning', 'Enter initial code');
     } else if (!nCodes) {
@@ -82,7 +113,7 @@ function watchFirstStep() {
       }
       goToStepTwo();
     }
-  });
+  };
 }
 
 function handleParticipants(opt1, opt2) {
@@ -93,7 +124,7 @@ function handleParticipants(opt1, opt2) {
 }
 
 function showParticipants() {
-  let html = '<section><h3>Original List</h3><ol>';
+  let html = '<section class="participants"><h3>Participants</h3><ol>';
   for (const participant of participants) {
     html += `<li>${participant}</li>`;
   }
@@ -108,15 +139,18 @@ function goToStepTwo() {
 }
 
 function watchSecondStep() {
-  const $byNgroups = d.getElementById('byNgroups'),
+  const $form = d.querySelector('form'),
+    $byNgroups = d.getElementById('byNgroups'),
     $byNparticipants = d.getElementById('byNparticipants'),
     $number = d.getElementById('number'),
     $generate = d.getElementById('generate');
 
   let by = null,
-    number = null,
-    limit = null;
+    number = null;
 
+  $form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
   $byNgroups.addEventListener('click', () => {
     by = 'byNgroups';
   });
@@ -131,11 +165,24 @@ function watchSecondStep() {
       notify('warning', 'You must enter a positive number');
     }
   });
+  $number.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      getRandomTeams();
+    }
+  });
   $generate.addEventListener('click', () => {
+    getRandomTeams();
+  });
+  const getRandomTeams = () => {
+    if (!by) {
+      notify('warning', 'You must select an option');
+      return;
+    }
     if (number < 2) {
       notify('warning', 'You must request at less 2 groups');
       return;
     }
+    let limit = null;
     const mix = getParticipantsMixed();
     const arr = [];
     let pos = 0;
@@ -170,7 +217,7 @@ function watchSecondStep() {
       }
     }
     showTeams(arr);
-  });
+  };
 }
 
 function getParticipantsMixed() {
@@ -190,9 +237,10 @@ function getParticipantsMixed() {
 }
 
 function showTeams(arr) {
-  let html = '<section><h2>Generated Teams</h2><div>';
+  let html =
+    '<section class="teams"><h2>Generated Teams</h2><div class="cards">';
   for (let i = 0; i < arr.length; i++) {
-    html += `<div>
+    html += `<div class="card">
     <h4>Group ${i + 1}</h4>
     <ol>`;
     for (let j = 0; j < arr[i].length; j++) {
@@ -207,8 +255,8 @@ function showTeams(arr) {
 function notify(className, text) {
   const $notify = d.getElementById('notify');
   $notify.innerHTML = `<p class="${className}">${text}</p>`;
-  const intervalId = setTimeout(() => {
+  const timeoutId = setTimeout(() => {
     $notify.innerHTML = null;
-    clearInterval(intervalId);
+    clearTimeout(timeoutId);
   }, 3000);
 }
