@@ -39,39 +39,30 @@ function watchFirstStep() {
     nameEntered = e.target.value;
   });
   $name.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      setParticipants();
-    }
+    if (e.key === 'Enter') setParticipants();
   });
   $addName.addEventListener('click', () => {
     setParticipants();
   });
   $addNames.addEventListener('click', () => {
-    if (!participants.length) {
-      notify('warning', 'Enter the names');
-    } else if (participants.length < 4) {
+    if (!participants.length) notify('warning', 'Enter the names');
+    else if (participants.length < 4)
       notify('warning', 'You must enter at least 4 names');
-    } else {
-      goToStepTwo();
-    }
+    else goToStepTwo();
   });
   $iCode.addEventListener('input', (e) => {
     iCode = +e.target.value;
     checkCode('iCode');
   });
   $iCode.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      setCodes();
-    }
+    if (e.key === 'Enter') setCodes();
   });
   $nCodes.addEventListener('input', (e) => {
     nCodes = +e.target.value;
     checkCode('nCodes');
   });
   $nCodes.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      setCodes();
-    }
+    if (e.key === 'Enter') setCodes();
   });
   $addCodes.addEventListener('click', () => {
     setCodes();
@@ -82,35 +73,30 @@ function watchFirstStep() {
       nameEntered = null;
       $name.value = null;
       showParticipants();
-    } else {
-      notify('warning', 'Enter a name');
-    }
+    } else notify('warning', 'Enter a name');
   };
   const checkCode = (code) => {
-    if (code <= 0) {
-      notify('warning', 'You must enter a positive number');
-      if (code === 'iCode') {
+    if (code === 'iCode') {
+      if (iCode <= 0) {
+        notify('warning', 'You must enter a positive number');
         iCode = null;
         $iCode.value = null;
-      } else if (code === 'nCodes') {
-        {
-          nCodes = null;
-          $nCodes.value = null;
-        }
+      }
+    } else if (code === 'nCodes') {
+      if (nCodes <= 0) {
+        notify('warning', 'You must enter a positive number');
+        nCodes = null;
+        $nCodes.value = null;
       }
     }
   };
   const setCodes = () => {
-    if (!iCode) {
-      notify('warning', 'Enter initial code');
-    } else if (!nCodes) {
-      notify('warning', 'Enter number of codes');
-    } else if (nCodes < iCode + 3) {
+    if (!iCode) notify('warning', 'Enter initial code');
+    else if (!nCodes) notify('warning', 'Enter number of codes');
+    else if (nCodes < iCode + 3)
       notify('warning', 'You must request at less 4 codes');
-    } else {
-      for (let i = iCode; i <= nCodes; i++) {
-        participants.push(`Code #${i}`);
-      }
+    else {
+      for (let i = iCode; i <= nCodes; i++) participants.push(`Code #${i}`);
       goToStepTwo();
     }
   };
@@ -125,9 +111,7 @@ function handleParticipants(opt1, opt2) {
 
 function showParticipants() {
   let html = '<section class="participants"><h3>Participants</h3><ol>';
-  for (const participant of participants) {
-    html += `<li>${participant}</li>`;
-  }
+  for (const participant of participants) html += `<li>${participant}</li>`;
   html += '</ol></section>';
   $participants.innerHTML = html;
 }
@@ -166,9 +150,7 @@ function watchSecondStep() {
     }
   });
   $number.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      getRandomTeams();
-    }
+    if (e.key === 'Enter') getRandomTeams();
   });
   $generate.addEventListener('click', () => {
     getRandomTeams();
@@ -184,39 +166,34 @@ function watchSecondStep() {
     }
     let limit = null;
     const mix = getParticipantsMixed();
-    const arr = [];
+    const teams = [];
     let pos = 0;
-    if (by === 'byNgroups') {
-      if (mix.length % number === 0) {
-        limit = mix.length / number;
+    mix.length % number === 0
+      ? (limit = mix.length / number)
+      : (limit = Math.ceil(mix.length / number));
+    const addTeam = (l) => {
+      const team = mix.slice(pos, l);
+      if (team.length === 1) {
+        const idx = Math.floor(Math.random() * teams.length);
+        teams[idx].push(team);
       } else {
-        limit = Math.ceil(mix.length / number);
+        if (!team.length) 'pass';
+        else teams.push(team);
       }
+      pos = l;
+    };
+    if (by === 'byNgroups') {
       for (let i = 0; i < number; i++) {
         const l = pos + limit > mix.length ? mix.length : pos + limit;
-        const subArr = mix.slice(pos, l);
-        arr.push(subArr);
-        pos = l;
+        addTeam(l);
       }
     } else if (by === 'byNparticipants') {
-      if (mix.length % number === 0) {
-        limit = mix.length / number;
-      } else {
-        limit = Math.ceil(mix.length / number);
-      }
       for (let i = 0; i < limit; i++) {
         const l = pos + number > mix.length ? mix.length : pos + number;
-        const subArr = mix.slice(pos, l);
-        if (subArr.length === 1) {
-          const idx = Math.floor(Math.random() * arr.length);
-          arr[idx].push(subArr);
-        } else {
-          arr.push(subArr);
-        }
-        pos = l;
+        addTeam(l);
       }
     }
-    showTeams(arr);
+    showTeams(teams);
   };
 }
 
@@ -230,9 +207,8 @@ function getParticipantsMixed() {
       i++;
     }
   }
-  if (JSON.stringify(participants) === JSON.stringify(arr)) {
+  if (JSON.stringify(participants) === JSON.stringify(arr))
     getParticipantsMixed();
-  }
   return arr;
 }
 
@@ -243,9 +219,7 @@ function showTeams(arr) {
     html += `<div class="card">
     <h4>Group ${i + 1}</h4>
     <ol>`;
-    for (let j = 0; j < arr[i].length; j++) {
-      html += `<li>${arr[i][j]}</li>`;
-    }
+    for (let j = 0; j < arr[i].length; j++) html += `<li>${arr[i][j]}</li>`;
     html += '</ol></div>';
   }
   html += '</div></section>';
